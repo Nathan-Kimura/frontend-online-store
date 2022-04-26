@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import Header from '../components/Header';
 import Categories from '../components/Categories';
 import Products from '../components/Products';
+import { getProductsFromCategoryAndQuery } from '../services/api';
 
 class Home extends Component {
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.getFunc = this.getFunc.bind(this);
     this.state = {
       input: '',
       category: '',
-      product: '',
+      products: [],
     };
   }
 
@@ -22,15 +23,16 @@ class Home extends Component {
     });
   }
 
-  onClick() {
-    const { input } = this.state;
+  async getFunc() {
+    const { category, input } = this.state;
+    const response = await getProductsFromCategoryAndQuery(category, input);
     this.setState({
-      product: input,
+      products: response.results,
     });
   }
 
   render() {
-    const { category, input, product } = this.state;
+    const { category, input, products } = this.state;
     return (
       <section>
         <Header />
@@ -43,7 +45,7 @@ class Home extends Component {
           />
           <button
             type="button"
-            onClick={ this.onClick }
+            onClick={ this.getFunc }
             data-testid="query-button"
           >
             Buscar
@@ -54,7 +56,8 @@ class Home extends Component {
         </p>
         <Products
           category={ category }
-          input={ product }
+          input={ input }
+          products={ products }
         />
       </section>
     );
