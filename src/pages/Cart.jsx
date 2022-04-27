@@ -1,20 +1,46 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ProductCart from '../components/ProductsCart';
 
 class Cart extends Component {
-  render() {
+  constructor() {
+    super();
+    this.removeItem = this.removeItem.bind(this);
+    this.state = {
+      cartinho: '',
+    };
+  }
+
+  componentDidMount() {
     const { littleCart } = this.props;
-    const quantity = littleCart.length;
+    this.setState({
+      cartinho: littleCart,
+    });
+  }
+
+  removeItem(id) {
+    this.setState((prevState) => ({
+      cartinho: prevState.cartinho.filter((item) => item.id !== id),
+    }));
+  }
+
+  render() {
+    const { cartinho } = this.state;
+
+    const quantity = cartinho.length;
     return (
       <section>
-        <h1 data-testid="shopping-cart-product-quantity">{quantity}</h1>
-        {littleCart ? (
-          littleCart.map((cart) => (
-            <div data-testid="shopping-cart-product-name" key={ cart.title }>
-              <p>{cart.title}</p>
-              <img src={ cart.thumbnail } alt={ cart.title } />
-              <p>{cart.price}</p>
-            </div>
+        <h1>{quantity}</h1>
+        {cartinho ? (
+          cartinho.map((cart) => (
+            <ProductCart
+              key={ cart.id }
+              name={ cart.title }
+              img={ cart.thumbnail }
+              alt={ cart.title }
+              price={ cart.price }
+              removeItem={ this.removeItem }
+            />
           ))
         ) : (
           <p data-testid="shopping-cart-empty-message">

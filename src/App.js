@@ -20,9 +20,9 @@ class App extends React.Component {
   //   });
   // }
 
-  addToCart(title, thumbnail, price) {
+  addToCart(title, thumbnail, price, id) {
     this.setState((prevState) => ({
-      littleCart: [...prevState.littleCart, { title, thumbnail, price }],
+      littleCart: [...prevState.littleCart, { title, thumbnail, price, id }],
     }));
   }
 
