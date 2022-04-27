@@ -32,11 +32,11 @@ class Home extends Component {
     });
   }
 
-  recoveryCat(data) {
+  async recoveryCat(data) {
     this.setState({
       category: data,
     });
-    this.getFunc();
+    await this.getFunc();
   }
 
   render() {
