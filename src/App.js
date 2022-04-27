@@ -8,16 +8,22 @@ import Details from './pages/Details';
 class App extends React.Component {
   constructor() {
     super();
-    this.receiveCart = this.receiveCart.bind(this);
+    this.addToCart = this.addToCart.bind(this);
     this.state = {
       littleCart: '',
     };
   }
 
-  receiveCart(cart) {
-    this.setState({
-      littleCart: cart,
-    });
+  // receiveCart(cart) {
+  //   this.setState({
+  //     littleCart: cart,
+  //   });
+  // }
+
+  addToCart(title, thumbnail, price) {
+    this.setState((prevState) => ({
+      littleCart: [...prevState.littleCart, { title, thumbnail, price }],
+    }));
   }
 
   render() {
@@ -29,9 +35,12 @@ class App extends React.Component {
           <Route
             exact
             path="/"
-            render={ () => <Home cartBack={ this.receiveCart } /> }
+            render={ () => <Home cartBack={ this.addToCart } /> }
           />
-          <Route path="/details/:id" component={ Details } />
+          <Route
+            path="/details/:id"
+            render={ (props) => <Details { ...props } cartBack={ this.addToCart } /> }
+          />
           <Route exact path="/cart" render={ () => <Cart littleCart={ littleCart } /> } />
         </Switch>
       </BrowserRouter>

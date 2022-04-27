@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getProductID } from '../services/api';
+import Header from '../components/Header';
 
 class Details extends Component {
   constructor() {
@@ -29,10 +30,21 @@ class Details extends Component {
 
   render() {
     const { productId } = this.state;
+    const { cartBack } = this.props;
     console.log(productId);
     return (
       <section data-testid="product-detail-name">
+        <Header />
         <h1>{productId.title}</h1>
+        <button
+          type="button"
+          data-testid="product-detail-add-to-cart"
+          onClick={
+            () => cartBack(productId.title, productId.thumbnail, productId.price)
+          }
+        >
+          Adicionar ao carrinho
+        </button>
       </section>
     );
   }
@@ -46,4 +58,5 @@ Details.propTypes = {
       id: PropTypes.string.isRequired,
     }),
   }).isRequired,
+  cartBack: PropTypes.func.isRequired,
 };
