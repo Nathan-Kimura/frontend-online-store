@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Categories from '../components/Categories';
 import Products from '../components/Products';
@@ -10,10 +11,12 @@ class Home extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.getFunc = this.getFunc.bind(this);
     this.recoveryCat = this.recoveryCat.bind(this);
+    this.addToCart = this.addToCart.bind(this);
     this.state = {
       input: '',
       category: '',
       products: [],
+      cart: [],
     };
   }
 
@@ -37,6 +40,16 @@ class Home extends Component {
       category: data,
     });
     await this.getFunc();
+  }
+
+  addToCart(title, thumbnail, price) {
+    this.setState((prevState) => ({
+      cart: [...prevState.cart, { title, thumbnail, price }],
+    }), () => {
+      const { cart } = this.state;
+      const { cartBack } = this.props;
+      cartBack(cart);
+    });
   }
 
   render() {
@@ -66,6 +79,7 @@ class Home extends Component {
           category={ category }
           input={ input }
           products={ products }
+          addToCart={ this.addToCart }
         />
       </section>
     );
@@ -73,3 +87,7 @@ class Home extends Component {
 }
 
 export default Home;
+
+Home.propTypes = {
+  cartBack: PropTypes.func.isRequired,
+};
