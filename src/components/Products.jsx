@@ -7,19 +7,19 @@ class Products extends Component {
     const { products, cartBack } = this.props;
     return (
       <section>
-        {products.map((product) => (
+        {products.map((prod) => (
 
-          <div key={ product.id } data-testid="product">
+          <div key={ prod.id } data-testid="product">
             <Link
               data-testid="product-detail-link"
-              to={ `/details/${product.id}` }
+              to={ `/details/${prod.id}` }
             >
-              <p>{product.title}</p>
-              <img src={ product.thumbnail } alt={ product.title } />
-              <p>{product.price}</p>
+              <p>{prod.title}</p>
+              <img src={ prod.thumbnail } alt={ prod.title } />
+              <p>{prod.price}</p>
             </Link>
             <button
-              onClick={ () => cartBack(product.title, product.thumbnail, product.price) }
+              onClick={ () => cartBack(prod.title, prod.thumbnail, prod.price) }
               data-testid="product-add-to-cart"
               type="button"
             >
