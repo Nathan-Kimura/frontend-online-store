@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 class Products extends Component {
   render() {
-    const { products, addToCart } = this.props;
+    const { products, cartBack } = this.props;
     return (
       <section>
         {products.map((product) => (
@@ -19,7 +19,7 @@ class Products extends Component {
               <p>{product.price}</p>
             </Link>
             <button
-              onClick={ () => addToCart(product.title, product.thumbnail, product.price) }
+              onClick={ () => cartBack(product.title, product.thumbnail, product.price) }
               data-testid="product-add-to-cart"
               type="button"
             >
@@ -37,7 +37,7 @@ export default Products;
 
 Products.propTypes = {
   products: PropTypes.arrayOf(Object),
-  addToCart: PropTypes.func.isRequired,
+  cartBack: PropTypes.func.isRequired,
 };
 
 Products.defaultProps = {

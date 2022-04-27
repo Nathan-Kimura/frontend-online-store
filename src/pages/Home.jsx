@@ -11,12 +11,10 @@ class Home extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.getFunc = this.getFunc.bind(this);
     this.recoveryCat = this.recoveryCat.bind(this);
-    this.addToCart = this.addToCart.bind(this);
     this.state = {
       input: '',
       category: '',
       products: [],
-      cart: [],
     };
   }
 
@@ -42,18 +40,9 @@ class Home extends Component {
     await this.getFunc();
   }
 
-  addToCart(title, thumbnail, price) {
-    this.setState((prevState) => ({
-      cart: [...prevState.cart, { title, thumbnail, price }],
-    }), () => {
-      const { cart } = this.state;
-      const { cartBack } = this.props;
-      cartBack(cart);
-    });
-  }
-
   render() {
     const { category, input, products } = this.state;
+    const { cartBack } = this.props;
     return (
       <section>
         <Header />
@@ -79,7 +68,7 @@ class Home extends Component {
           category={ category }
           input={ input }
           products={ products }
-          addToCart={ this.addToCart }
+          cartBack={ cartBack }
         />
       </section>
     );
