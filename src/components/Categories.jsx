@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { getCategories } from '../services/api';
 
 class Categories extends Component {
   constructor() {
     super();
     this.getFunc = this.getFunc.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.state = {
       categories: [],
     };
@@ -12,6 +14,12 @@ class Categories extends Component {
 
   componentDidMount() {
     this.getFunc();
+  }
+
+  handleClick({ target }) {
+    const { callBack } = this.props;
+    const { value } = target;
+    callBack(value);
   }
 
   async getFunc() {
@@ -32,6 +40,8 @@ class Categories extends Component {
               type="button"
               data-testid="category"
               key={ cat.id }
+              onClick={ this.handleClick }
+              value={ cat.id }
             >
               {cat.name}
             </button>
@@ -43,3 +53,7 @@ class Categories extends Component {
 }
 
 export default Categories;
+
+Categories.propTypes = {
+  callBack: PropTypes.func.isRequired,
+};
