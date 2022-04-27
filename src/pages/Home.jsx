@@ -9,6 +9,7 @@ class Home extends Component {
     super();
     this.handleChange = this.handleChange.bind(this);
     this.getFunc = this.getFunc.bind(this);
+    this.recoveryCat = this.recoveryCat.bind(this);
     this.state = {
       input: '',
       category: '',
@@ -31,12 +32,19 @@ class Home extends Component {
     });
   }
 
+  recoveryCat(data) {
+    this.setState({
+      category: data,
+    });
+    this.getFunc();
+  }
+
   render() {
     const { category, input, products } = this.state;
     return (
       <section>
         <Header />
-        <Categories />
+        <Categories callBack={ this.recoveryCat } />
         <label htmlFor="query-input">
           <input
             data-testid="query-input"
